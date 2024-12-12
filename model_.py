@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from helper import remove_outliers
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -25,6 +26,11 @@ class BaseModel:
 
     def preprocess(self):
         """Preprocess the data."""
+
+        # Remove outliers
+        print(f"{self.data.shape[0]} rows before preprocessing")
+        self.data = remove_outliers(self.data)
+        print(f"{self.data.shape[0]} rows after preprocessing")
 
         X = self.data.drop(columns=['loan_status', 'transaction_date', 'customer_id'])
         y = self.data['loan_status']
